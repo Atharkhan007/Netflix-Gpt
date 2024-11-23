@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Header from './Header';
-import { BG_IMG } from '../Utils/constants';
+import { BG_IMG, USER_AVATAR } from '../Utils/constants';
 import { checkValidData } from '../Utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword ,updateProfile } from 'firebase/auth';
 import { auth } from '../Utils/firebase';
@@ -46,7 +46,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value ,  
-            photoURL: "https://imgs.search.brave.com/DbqPhkhjKqTVJCh3m2jieq0srfHnwy9uY0Y3ulYsdzQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1QlltRTBaVGs0/Wm1NdE1tWTNZUzAw/WWpkaUxXSXlPREl0/Wldaa09EazFaRFl3/T1RRNVhrRXlYa0Zx/Y0djQC5qcGc"
+            photoURL: USER_AVATAR,
           }).then(() => {
             const  {uid, email, displayName, photoURL} = auth.current.value;
             dispatch(addUser({uid:uid , email: email, displayName: displayName, photoURL: photoURL}));

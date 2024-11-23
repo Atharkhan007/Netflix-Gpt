@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
-import { LOGO_IMG } from '../Utils/constants'
-import { USER_AVATAR } from '../Utils/constants'
+import React, { useEffect } from 'react';
+import { LOGO_IMG } from '../Utils/constants';
+import { USER_AVATAR } from '../Utils/constants';
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import {auth } from '../Utils/firebase'
+import {auth } from '../Utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../Utils/userSlice';
+
+
 const Header = () => {
 
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+   const unsubscribe =  onAuthStateChanged(auth, (user) => {
       if (user) {
         const {uid, email , displayName, photoURL} = user;
         dispatch(addUser(
@@ -38,6 +40,8 @@ const Header = () => {
         navigate("/")
       }
     });
+    // unsubscribe when component unmounts
+    return () => unsubscribe();
     
   }, [])
 
